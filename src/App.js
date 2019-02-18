@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Switch, Route } from 'react-router-dom'
+import './App.scss';
+import { Switch, Route, NavLink } from 'react-router-dom'
 import Home from './components/home/Home'
 import 'antd/dist/antd.css'
 import { Layout, Menu } from 'antd'
 import firebase from 'firebase'
+import Login from './components/accounts/Login'
 class App extends Component {
 
   constructor(props){
@@ -51,12 +52,38 @@ class App extends Component {
           style={{ lineHeight: "64px" }}
           defaultSelectedKeys={['home']}
           >
-            <Item key="home">Home</Item>
+            <Item key="home">
+            <NavLink to="/">
+            Home
+            </NavLink></Item>
+            <Item key="login">
+            <NavLink to="/login">
+            Login
+            </NavLink></Item>
           </Menu>
         </Header>
         <Content className="content">
           <Switch>
-            <Route path="/" render={()=> <Home loginGoogle={this.loginGoogle} user={this.state.user} logOut={this.logOut}/>}/> 
+            <Route 
+            exact path="/" 
+            render={()=> 
+              <Home 
+                loginGoogle={this.loginGoogle} 
+                user={this.state.user} 
+                logOut={this.logOut}
+              />}
+            /> 
+
+            <Route 
+            exact path="/login"
+            render={()=> 
+            <Login
+              loginGoogle={this.loginGoogle} 
+              user={this.state.user} 
+              logOut={this.logOut}
+              />}
+
+            />
           </Switch>
         </Content>
         <Footer>
