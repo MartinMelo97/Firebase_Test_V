@@ -7,6 +7,8 @@ class Login extends Component {
     constructor(props){
         super(props)
         this.state = {
+            correo_login: null,
+            contraseña_login: null,
             correo: null,
             contraseña: null,
             confirmar_contraseña:null
@@ -17,8 +19,16 @@ class Login extends Component {
         this.setState({correo: e.target.value})
     }
 
+    onChangeEmailLogin = (e) => {
+        this.setState({correo_login: e.target.value})
+    }
+
     onChangePassword = (e) => {
         this.setState({contraseña: e.target.value})
+    }
+
+    onChangePasswordLogin = (e) => {
+        this.setState({contraseña_login: e.target.value})
     }
 
     onChangeConfirmPassword = (e) => {
@@ -53,13 +63,13 @@ class Login extends Component {
                             placeholder="Correo electrónico"
                             prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
                             suffix={suffix}
-                            value={this.state.correo}
-                            onChange={e=>this.onChangeEmail(e)}
+                            value={this.state.correo_login}
+                            onChange={e=>this.onChangeEmailLogin(e)}
                         />
                         <Password
                             placeholder="Contraseña"
-                            onChange={e=>this.onChangePassword(e)}
-                            value={this.state.contraseña}
+                            onChange={e=>this.onChangePasswordLogin(e)}
+                            value={this.state.contraseña_login}
                         >
                         </Password>
                         <Button 
@@ -67,8 +77,16 @@ class Login extends Component {
                         shape="round" 
                         icon="user" 
                         size={'small'}
-                        onClick={()=>this.props.loginEmail(this.state.correo, this.state.contraseña)}
+                        onClick={()=>this.props.loginEmail(this.state.correo_login, this.state.contraseña_login)}
                         >Iniciar sesión</Button>
+
+                        <img 
+                        src="https://pbs.twimg.com/profile_images/927446347879292930/Fi0D7FGJ_400x400.jpg"
+                        className="google-button"
+                        alt="Login Google"
+                        onClick={this.props.loginGoogle}
+                        />
+                        <p>Inicia sesión con Google</p>
                     </Col>
                     <Col className="col form" span={12}>
                         <p>Crear cuenta</p>

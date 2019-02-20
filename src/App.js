@@ -27,7 +27,11 @@ class App extends Component {
   loginGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
-      .then((user)=>console.log("Estoy logeado soy paquito"))
+      .then((user)=>
+      {
+        console.log("Estoy logeado soy paquito")
+        window.location.assign("/")
+      })
       .catch((err)=>console.log("Hay un error " + err))
   }
 
@@ -40,7 +44,11 @@ class App extends Component {
 
   registerUser = (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(alert("Usuario creado con éxito"))
+      .then(()=>
+        {
+          alert("Usuario creado con éxito")
+          window.location.assign("/")
+        })
       .catch(err=>
         {
           console.log(err)
@@ -50,7 +58,10 @@ class App extends Component {
 
   loginWithEmail = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(alert("Usuario loggeado con éxito"))
+    .then(()=>{
+      alert("Usuario loggeado con éxito")
+      window.location.assign("/")
+    })
     .catch(err=>
       {
         console.log(err)
@@ -76,10 +87,19 @@ class App extends Component {
             <NavLink to="/">
             Home
             </NavLink></Item>
-            <Item key="login">
-            <NavLink to="/login">
-            Login
-            </NavLink></Item>
+
+            {this.state.user ? 
+              <Item
+              onClick={this.logOut}
+              >Cerrar sesión</Item>
+              : 
+              <Item key="login">
+              <NavLink to="/login">
+                Login
+              </NavLink></Item>
+            }
+            
+            
           </Menu>
         </Header>
         <Content className="content">
@@ -88,9 +108,7 @@ class App extends Component {
             exact path="/" 
             render={()=> 
               <Home 
-                loginGoogle={this.loginGoogle} 
                 user={this.state.user} 
-                logOut={this.logOut}
               />}
             /> 
 
@@ -100,7 +118,6 @@ class App extends Component {
             <Login
               loginGoogle={this.loginGoogle} 
               user={this.state.user} 
-              logOut={this.logOut}
               register={this.registerUser}
               loginEmail={this.loginWithEmail}
               />}
