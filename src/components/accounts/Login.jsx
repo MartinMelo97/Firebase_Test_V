@@ -25,6 +25,17 @@ class Login extends Component {
         this.setState({confirmar_contraseña: e.target.value})
     }
 
+    confirmPasswords = () => {
+        if(this.state.contraseña === this.state.confirmar_contraseña)
+        {
+            this.props.register(this.state.correo, this.state.contraseña)
+        }
+        else
+        {
+            alert("Tus contraseñas no coinciden")
+        }
+    }
+
     render(){
         const suffix = this.state.correo ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
         const { Password } = Input
@@ -51,7 +62,13 @@ class Login extends Component {
                             value={this.state.contraseña}
                         >
                         </Password>
-                        <Button type="primary" shape="round" icon="user" size={'small'}>Iniciar sesión</Button>
+                        <Button 
+                        type="primary" 
+                        shape="round" 
+                        icon="user" 
+                        size={'small'}
+                        onClick={()=>this.props.loginEmail(this.state.correo, this.state.contraseña)}
+                        >Iniciar sesión</Button>
                     </Col>
                     <Col className="col form" span={12}>
                         <p>Crear cuenta</p>
@@ -71,10 +88,16 @@ class Login extends Component {
                         <Password
                             placeholder="Confirmar Contraseña"
                             onChange={e=>this.onChangeConfirmPassword(e)}
-                            value={this.state.contraseña}
+                            value={this.state.confirmar_contraseña}
                         >
                         </Password>
-                        <Button type="primary" shape="round" icon="user-add" size={'small'}>Regístrate</Button>
+                        <Button 
+                            type="primary" 
+                            shape="round" 
+                            icon="user-add" 
+                            size={'small'}
+                            onClick={this.confirmPasswords}
+                            >Regístrate</Button>
                     </Col>
                 </Row>
             </div>

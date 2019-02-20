@@ -38,6 +38,26 @@ class App extends Component {
     this.setState({user: null})
   }
 
+  registerUser = (email, password) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(alert("Usuario creado con éxito"))
+      .catch(err=>
+        {
+          console.log(err)
+          alert("No se puedo crear usuario")
+        })
+  }
+
+  loginWithEmail = (email, password) => {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(alert("Usuario loggeado con éxito"))
+    .catch(err=>
+      {
+        console.log(err)
+        alert("No se puedo loggear usuario")
+      })
+  }
+
 
   render() {
     const { Header, Content, Footer } = Layout;
@@ -81,6 +101,8 @@ class App extends Component {
               loginGoogle={this.loginGoogle} 
               user={this.state.user} 
               logOut={this.logOut}
+              register={this.registerUser}
+              loginEmail={this.loginWithEmail}
               />}
 
             />
