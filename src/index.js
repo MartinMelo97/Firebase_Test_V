@@ -17,6 +17,8 @@ firebase.initializeApp(
     }
 )
 
+const db = firebase.firestore()
+
 ReactDOM.render(
 <BrowserRouter>
 <App />

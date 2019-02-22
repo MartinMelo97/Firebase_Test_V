@@ -6,10 +6,12 @@ import 'antd/dist/antd.css'
 import { Layout, Menu } from 'antd'
 import firebase from 'firebase'
 import Login from './components/accounts/Login'
+import Profile from './components/accounts/Profile'
 class App extends Component {
 
   constructor(props){
     super(props)
+    this.db = firebase.firestore()
     this.state = {
       user: null
     }
@@ -30,7 +32,7 @@ class App extends Component {
       .then((user)=>
       {
         console.log("Estoy logeado soy paquito")
-        window.location.assign("/")
+        window.location.assign("/profile")
       })
       .catch((err)=>console.log("Hay un error " + err))
   }
@@ -47,7 +49,7 @@ class App extends Component {
       .then(()=>
         {
           alert("Usuario creado con éxito")
-          window.location.assign("/")
+          window.location.assign("/profile")
         })
       .catch(err=>
         {
@@ -60,7 +62,7 @@ class App extends Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
       alert("Usuario loggeado con éxito")
-      window.location.assign("/")
+      window.location.assign("/profile")
     })
     .catch(err=>
       {
@@ -88,7 +90,7 @@ class App extends Component {
             Home
             </NavLink></Item>
 
-            {this.state.user ? 
+            {this.state.user ?
               <Item
               onClick={this.logOut}
               >Cerrar sesión</Item>
@@ -121,8 +123,17 @@ class App extends Component {
               register={this.registerUser}
               loginEmail={this.loginWithEmail}
               />}
-
             />
+
+            <Route 
+            exact path="/profile"
+            render={()=>
+            <Profile
+              user={this.state.user}
+              db={this.db}
+            />}
+            />
+
           </Switch>
         </Content>
         <Footer>
