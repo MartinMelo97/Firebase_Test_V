@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import firebase from 'firebase'
 import { Input, Button, Row, Col, Icon, DatePicker } from 'antd'
 
 class Profile extends Component {

@@ -7,6 +7,7 @@ import { Layout, Menu } from 'antd'
 import firebase from 'firebase'
 import Login from './components/accounts/Login'
 import Profile from './components/accounts/Profile'
+import Products from './components/products/Products'
 class App extends Component {
 
   constructor(props){
@@ -101,6 +102,10 @@ class App extends Component {
               </NavLink></Item>
             }
             
+            <Item key="products">
+              <NavLink to="/products">
+                Products
+              </NavLink></Item>
             
           </Menu>
         </Header>
@@ -129,6 +134,15 @@ class App extends Component {
             exact path="/profile"
             render={()=>
             <Profile
+              user={this.state.user}
+              db={this.db}
+            />}
+            />
+
+            <Route 
+            exact path="/products"
+            render={()=>
+            <Products
               user={this.state.user}
               db={this.db}
             />}
